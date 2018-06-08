@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>      
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script>       
+            /* 이미지 미리보기 */
+            function previewFile(){
+               
+                var file = document.querySelector('#getfile');
+                var fileList = file.files;
+                
+                var reader = new FileReader();
+                reader.readAsDataURL(fileList[0]);
+                reader.onload = function() {
+                    document.querySelector('#preview').src = reader.result;
+                };            
+            }
+        </script>      
+        
+        
+        
+        
+        
+    </head>
+    
+    <body>
+        
+        <br>
+        <br>
+        <br>
+        
+       <form  action='/users/uploading' method="post" enctype="multipart/form-data" >
+
+            <font size="5">이름 :</font>&nbsp;&nbsp;<input type="text" name="name" />
+
+        <br>
+
+        <br>
+
+        <input type='file' name='uploading' /><br>
+
+        <br>
+
+        <input type='submit' />
+
+</form>
+
+        
+        <p> customizing </p>    
+      
+          <br>
+              <canvas id="cup" width="480" height="160" style="border :1px solid black"> </canvas> 
+              <br> 
+       
+        <script>
+            var arrCount = 0;
+            var arr = new Array();
+            var ImageArr = new Array();
+           
+            /* 그림의 현재 x,y 좌표 및 가로 세로 사이즈 저장을 위한 객체 선언 */
+            function Info(x_point, y_point, x_size, y_size){
+                this.x_point = x_point;
+                this.y_point = y_point;
+                this.x_size = x_size;
+                this.y_size = y_size;
+            }
+            
+        /* 이미지 캔버스에 그리기 */       
+         var canvas = document.getElementById("cup");
+         var context = canvas.getContext("2d");
+            
+    
+            function ImgUpload(temp){
+               // alert(temp.src);
+                var image = new Image();
+                image.src = temp.src;
+                
+                image.onload = function(){
+               context.drawImage(image,0,0,150, 100); // (0,0) 위치에 가로 150, 세로 100크기로 넣기
+               };
+            
+            /* 텍스트 캔버스에 생성 */
+            function MakeText(){
+                var value = $('input[name=inputText]').val(); // 입력한 텍스트 값 가져오기
+                
+                context.font = 'italic 38pt Arial';
+                context.fillText(value, 50, 50); // (50,50)에 텍스트 생성
+            }
+            
+            /* 이미지 이동 */            
+            canvas.addEventListener("click", function(e) {             
+                console.log({x: e.layerX, y: e.layerY}); // 클릭한 현재 좌표
+                
+                for(var i=0; i<arrCount; i++){
+                   var tmp = arr[i];
+                    
+                    if(e.layerX >= tmp.x_point
+                      && e.layerX <= tmp.x_point+tmp.x_size
+                      && e.layerY >= tmp.y_point
+                      && e.layerY <= tmp.y_point+tmp.y_size){                        
+                       var num = i;
+                       }                 
+                } // 캔버스 내 이미지 선택
+                
+                
+                $(document).keydown(function(event){
+                if(event.keyCode == '37'){
+                    //alert('좌측');
+                    context.clearRect(0,0,480,160);
+                    context.save();
+                    context.drawImage(ImageArr[num], tmp.x_point-5, tmp.y_point ,150, 100);
+                }
+                
+                else if(event.keyCode == '39'){
+                    //alert('우측');
+                     context.clearRect(0,0,480,160);
+                    context.save();
+                    context.drawImage(ImageArr[num], tmp.x_point+5, tmp.y_point ,150, 100);
+                }
+                
+                 else if(event.keyCode == '38'){
+                   // alert('위');
+                      context.clearRect(0,0,480,160);
+                    context.save();
+                    context.drawImage(ImageArr[num], tmp.x_point, tmp.y_point-5 ,150, 100);
+                }
+                
+                 else if(event.keyCode == '40'){
+                   // alert('아래');
+                      context.clearRect(0,0,480,160);
+                    context.save();
+                    context.drawImage(ImageArr[num], tmp.x_point, tmp.y_point +5,150, 100 );
+                }              
+               });
+                    
+            }); 
+            
+         
+            
+            /* 이미지 크기 조정 */
+            
+            
+        </script>
+        
+        
+        <div id="ImagePre">            
+          <img id ="preview" src= "" width="150" height="50" alt = "사용자 이미지" onclick="ImgUpload(this);">
+          <img src="bom.jpg" id="img1" width="30" height="30" onclick="ImgUpload(this);" >
+         </div>
+        
+        <form>
+           텍스트 입력 : <input type="text" name="inputText"> <br>
+           <button type="button" onclick="MakeText();">텍스트생성</button>
+            
+        </form>
+        
+        
+        
+        
+     
+        
+        <br> 
+        <input type="file" id="getfile" accept="image/*" onchange="previewFile();">
+    </body>    
+</html>

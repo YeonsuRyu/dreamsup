@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.47;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.clear:after {
+    content: ' ';
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.content {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* header 구역 */
+.main-header {
+    height: 80px;
+    line-height: 79px;
+    overflow: hidden;
+}
+
+.menus {
+    float: right;
+}
+
+.main-logo {
+    display: inline-block;
+}
+
+.menus li,
+.menus ul {
+    float: left;
+}
+
+.menus-sub {
+    margin-left: 40px;
+}
+
+.menus-sub li {
+    margin-left: 12px;
+}
+.menus-sub li a {
+    color: #444;
+    font-size: 14px;
+    line-height: 79px;
+}
+
+.menus-main li {
+    margin-left: 20px;
+}
+
+.menus-main li a {
+    font-size: 18px;
+    color: #111;
+    font-weight: 500;
+    line-height: 79px;
+}
+
+
+/* body 구역 */
+.main-content {
+    display: flex;
+    min-height: 500px;
+    margin-top: 20px;
+}
+
+.main-left {
+    width: 200px;
+    margin-right: 20px;
+    background-color: #f8e2f5;
+}
+
+.main-right {
+    flex: 1;
+}
+
+.content-section:not(:last-child) {
+    padding-bottom: 40px;
+}
+
+.content-section h3 {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #111;
+}
+
+.section-info-body {
+    display: flex;
+    padding: 20px 10px;
+    background-color: #f8e2f5;
+    border-radius: 8px;
+}
+
+.section-info-item {
+    margin-right: 20px;
+    padding: 20px;
+}
+
+.section-info-item a {
+    color: #d869d9;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.section-log-body {
+}
+
+.log-item {
+    float: left;
+    display: flex;
+    height: 160px;
+    width: 33.33333333%;
+}
+
+.log-item-left {
+    width: 160px;
+    background-color: #f8e2f5;
+}
+
+.log-item-info {
+    flex: 1;
+    padding-left: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.log-item-time,
+.log-item-num {
+    margin-bottom: 4px;
+}
+
+.log-item-status {
+    margin-bottom: 20px;
+    color: #d869d9;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.log-item-btns button {
+    margin-bottom: 10px;
+    padding: 2px 10px;
+    border: 1px solid #999;
+    color: #999;
+    border-radius: 14px;
+    outline: none;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.section-car {
+
+}
+.car-item {
+    float: left;
+    width: calc((100% - 30px) / 4);
+    height: 237px;
+    background-color: #f8e2f5;
+}
+.car-item:not(:nth-child(4n)) {
+    margin-right: 10px;
+}
+.car-item:nth-child(n+5) {
+    margin-top: 20px;
+}

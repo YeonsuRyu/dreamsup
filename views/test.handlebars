@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <style>
+            .more {
+  display:block;
+  width: 55px;
+  height: 16px;
+  
+  background-position: 0 -78px;
+}
+
+.blind {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+}
+
+.more:hover, .close:hover {
+  cursor:pointer;
+}
+
+.close {
+  display:block;
+  
+  width: 42px;
+  height: 16px;
+  background-position: -166px -78px;
+}
+
+.board {
+  font-family:'돋움';
+  font-size:13px;
+  position:absolute;
+  top:30px;
+  width:410px;
+  height:135px;
+  background:pink;
+  visibility:hidden;
+}
+        </style>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script>       
+            /* 이미지 미리보기 */
+            function previewFile(){
+               
+                var file = document.querySelector('#getfile');
+                var fileList = file.files;
+                
+                var reader = new FileReader();
+                reader.readAsDataURL(fileList[0]);
+                reader.onload = function() {
+                    document.querySelector('#preview').src = reader.result;
+                };            
+            }
+        </script>      
+        
+    </head>
+    
+    <body>
+        <p> customizing </p>    
+         <div id="ImagePre">            
+            <img src='2.jpg'>
+          <img src= "3.jpg" alt="ads">
+         </div>
+          <img src='2.jpg'>
+          <img src= "3.jpg" alt="ads">
+        
+              <canvas id="cup" width="480" height="160" style="border :1px solid black"> </canvas> 
+              <br> 
+        <script>
+            const canWidth = 480; // 캔버스 가로 크기
+            const canHeight = 160; // 캔버스 세로 크기
+            var arrCount = 0;
+            var arr = new Array(); // 그림 객체 정보 저장
+            var ImageArr = new Array(); // 이미지 객체 정보 저장
+            
+            var textCount = 0;
+            var TextArr = new Array(); // 텍스트 객체 저장
+            
+            var allImg = 0;
+            var SImg = new Array(); // 최종 완성된 이미지 저장
+            var SImgHT = new Array(); // 최종 저장될 이미지의 해시태그 정보 저장 
+            
+                      
+            /* 그림의 현재 x,y 좌표 및 가로 세로 사이즈 저장을 위한 객체 선언 */
+            function Info(x_point, y_point, x_size, y_size){
+                this.x_point = x_point;
+                this.y_point = y_point;
+                this.x_size = x_size;
+                this.y_size = y_size;
+            }
+            /* 텍스트의 현재 x, y좌표 저장 하기 위한 객체 선언 */
+            function TextInfo(textval, textchar, x_point, y_point, textcol){
+                this.textval = textval;
+                this.textchar=textchar;
+                this.x_point = x_point;
+                this.y_point = y_point;
+                this.textcol = textcol;
+            }
+            
+            
+        /* 이미지 캔버스에 그리기 */       
+         var canvas = document.getElementById("cup");
+         var context = canvas.getContext("2d");
+            
+            /* 이미지 캔버스에 업로드 */
+            function ImgUpload(temp){
+               // alert(temp.src);
+                var image = new Image();
+                image.src = temp.src;
+                
+                image.onload = function(){
+               context.drawImage(image,0,0,150, 100); // (0,0) 위치에 가로 150, 세로 100크기로 넣기
+               };
+                
+                arr[arrCount] = new Info(0, 0, 150, 100); // 배열에 이미지 정보 객체 저장
+                ImageArr[arrCount] = image; // 배열에 이미지 저장
+                arrCount++;               
+                
+            }
+            
+            /* 텍스트 캔버스에 생성 */
+            function MakeText(){
+                var value = $('input[name=inputText]').val(); // 입력한 텍스트 값 가져오기
+                
+                var fontVal = $('select[name=charType]').val(); // 폰트 종류 값 가져오기
+                
+                var sizeVal = $('input[name=textSize]').val(); //크기 가져오기 
+                
+                var textX = $('input[name=textX]').val(); //x좌표 가져오기 
+                 
+                var textY = $('input[name=textY]').val(); //y좌표 가져오기
+                
+                var textCol = $('input[name=textColor]').val(); // 텍스트 색상 가져오기
+            
+                var mark="";
+                var markArr = document.getElementsByName("mark"); // 글꼴 특성 가져오기                
+                for(var i=0; i<markArr.length;i++){
+                    if(markArr[i].checked){
+                        mark += markArr[i].value;
+                        mark += " ";
+                    }
+                }
+                
+                context.font = mark + sizeVal + "pt " +fontVal;
+                context.fillStyle = textCol;
+                context.fillText(value, textX, textY); // (textX,textY)에 텍스트 생성  
+                TextArr[textCount] = new TextInfo(value, mark + sizeVal + "pt " +fontVal, textX, textY, textCol);  
+                textCount++;
+            }
+            
+            /* 텍스트 삭제 */
+            function DeleteText(){
+                textCount--;
+                context.clearRect(0,0,canWidth,canHeight);
+                
+                    // 이미지 그리기
+                    for(var j=0; j<arrCount; j++){
+                        if(arr[j].x_size != 0 && arr[j].y_size != 0){
+                    context.drawImage(ImageArr[j], arr[j].x_point, arr[j].y_point ,arr[j].x_size, arr[j].y_size);}
+                    }
+                    // 텍스트 그리기
+                    for(var k=0; k<textCount;k++){
+                    context.font = TextArr[k].textchar;
+                    context.fillStyle = TextArr[k].textcol;
+                    context.fillText(TextArr[k].textval,TextArr[k].x_point, TextArr[k].y_point);
+                }
+            }
+            
+            /* 이미지 이동 및 삭제 */          
+            canvas.addEventListener("click", function(e){
+             console.log({클릭x: e.layerX, y: e.layerY}); // 클릭한 현재 좌표
+            
+                // 클릭한 좌표의 이미지 선택하기
+                for(var t=0; t<arrCount; t++){
+                    var tmp = arr[t];
+                    if(e.layerX >= tmp.x_point
+                      && e.layerX <= tmp.x_point+tmp.x_size
+                      && e.layerY >= tmp.y_point
+                      && e.layerY <= tmp.y_point+tmp.y_size){                        
+                       var choice = t;// 캔버스 내 이미지 선택 
+                        var tt = arr[choice];
+                        break;
+                     }
+                    else
+                        choice = -1;
+                }
+               // console.log({choice: choice});
+                
+                if(choice != -1){
+                    
+                    $(document).keydown(function(event){
+                        
+                        switch(event.keyCode){
+                            case 37: // 좌로 이동
+                            tt.x_point -= 2;
+                            if(tt.x_point < 0){ // 예외처리
+                                tt.x_point +=2;
+                            }    
+                                break;
+                            case 39: // 우로 이동                                
+                             tt.x_point +=2;   
+                            if(tt.x_point + tt.x_size > canWidth){
+                                tt.x_point -=2;
+                            }
+                                break;
+                            case 38: // 위로 이동                                
+                            tt.y_point -= 2;
+                            if(tt.y_point < 0){
+                                tt.y_point +=2;
+                            }
+                                break;
+                            case 40: // 아래로 이동                               
+                            tt.y_point +=2;
+                           if(tt.y_point + tt.y_size > canHeight){
+                                tt.y_point -=2;
+                            }
+                                break;
+                            case 46: // delete 키 입력-삭제                               
+                            tt.x_point=0; tt.x_size=0; tt.y_point=0; tt.y_size = 0;
+                                break;
+                            default:
+                                break;                         
+                        }
+                        context.clearRect(0,0,canWidth,canHeight);
+                    // 이미지 그리기
+                    for(var j=0; j<arrCount; j++){
+                        if(arr[j].x_size != 0 && arr[j].y_size != 0){
+                    context.drawImage(ImageArr[j], arr[j].x_point, arr[j].y_point ,arr[j].x_size, arr[j].y_size);}
+                    }
+                    // 텍스트 그리기
+                    for(var k=0; k<textCount;k++){
+                    context.font = TextArr[k].textchar;
+                    context.fillStyle = TextArr[k].textcol;
+                    context.fillText(TextArr[k].textval,TextArr[k].x_point, TextArr[k].y_point);
+                }
+                        
+                        
+                    });
+                }
+                
+            });
+            
+            /* 이미지 크기 조정 - 더블 클릭 */
+            canvas.addEventListener("dblclick", function(e){
+                console.log({더블클릭x: e.layerX, y: e.layerY}); // 클릭한 현재 좌표
+                var x, y, input;
+                
+                // 더블 클릭한 좌표의 그림 선택하기 
+                for(var t=0; t<arrCount; t++){
+                    var tmp = arr[t];
+                    if(e.layerX >= tmp.x_point
+                      && e.layerX <= tmp.x_point+tmp.x_size
+                      && e.layerY >= tmp.y_point
+                      && e.layerY <= tmp.y_point+tmp.y_size){                        
+                       var choice = t;// 캔버스 내 이미지 선택 
+                        break;
+                     }
+                    else
+                        choice = -1;
+                }
+                
+                if(choice != -1) {
+                     // 현재 위치에서 조정할 수 있는 사이즈의 총 크기 알려주기
+                     var keyX = canWidth - arr[choice].x_point;
+                     var keyY = canHeight - arr[choice].y_point;                    
+                    
+                     // 변경하고자 하는 사이즈 입력받기                                  
+                        input = prompt("가로 사이즈를 입력하세요", "현재 크기 : " + arr[choice].x_size + " 최대 변경 가능 크기 : " + keyX);
+                        x = parseInt(input);
+                        input = prompt("세로 사이즈를 입력하세요", "현재 크기 : " + arr[choice].y_size + " 최대 변경 가능 크기 : " + keyY);
+                        y = parseInt(input);
+                        console.log({입력x:x, y:y});
+                    
+                    arr[choice].x_size = x;
+                    arr[choice].y_size = y;
+                    
+                    context.clearRect(0,0,canWidth,canHeight);
+                    // 이미지 그리기
+                    for(var j=0; j<arrCount; j++){
+                        if(arr[j].x_size != 0 && arr[j].y_size != 0){
+                    context.drawImage(ImageArr[j], arr[j].x_point, arr[j].y_point ,arr[j].x_size, arr[j].y_size);}
+                    }
+                    // 텍스트 그리기
+                    for(var k=0; k<textCount;k++){
+                    context.font = TextArr[k].textchar;
+                    context.fillStyle = TextArr[k].textcol;
+                    context.fillText(TextArr[k].textval,TextArr[k].x_point, TextArr[k].y_point);
+                }
+                }          
+                
+                
+                
+            });
+            
+            
+            /* 해시태그 추출 함수 */
+            function MakeHashTag(){
+                var value = $('input[name=hashTag]').val(); // 입력한 해시태그 값 가져오기
+                var strArr = value.split('#'); // #을 기준으로 자르기
+                var strHash="";
+                for(var t=1; t<strArr.length && t<6; t++){
+                    strHash += strArr[t]; // 제일 앞의 공백 제거
+                }
+                
+                SImgHT[allImg] = strHash; // 해시태그 정보 넣기
+                var divOut = document.getElementById("hashVal");
+                divOut.innerHTML = SImgHT[allImg];
+            }
+            
+            /* 캔버스 정보 저장 및 해시태그 저장 */
+            function Clear(){
+                var dataURL = canvas.toDataURL();
+                document.getElementById("canvasImg").src = dataURL;                
+            }
+            
+            /* 접기 펼치기 */
+           $(document).ready(function(){
+  $('.more').click(function(){
+    if($('.more').hasClass('more')){
+       $('.more').addClass('close').removeClass('more');
+       $('.board').css('visibility', 'visible');
+    }else if($('.close').hasClass('close')){
+       $('.close').addClass('more').removeClass('close');  
+       $('.board').css('visibility', 'hidden');
+    }
+  });
+});
+            
+        </script>
+        <span class="more">
+        <span class="blind">이미지 V</span>
+        </span>
+<div class="board">
+  
+     <img id ="preview" src= "" width="30" height="30" alt = "사용자 이미지" onclick="ImgUpload(this);">
+          <img src="bom.jpg" id="img1" width="30" height="30" onclick="ImgUpload(this);" >
+     <br> 
+        <input type="file" id="getfile" accept="image/*" onchange="previewFile();">
+ 
+  
+  
+</div>
+        
+        <!--
+        <div id="ImagePre">            
+          <img id ="preview" src= "" width="30" height="30" alt = "사용자 이미지" onclick="ImgUpload(this);">
+          <img src="bom.jpg" id="img1" width="30" height="30" onclick="ImgUpload(this);" >
+         </div>
+        
+        <form>
+           텍스트 입력 : <input type="text" name="inputText"> <br>
+            
+            <select name="charType">
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Arial">Arial</option>
+            <option value="Arial Black">Arial Black</option>
+            <option value="Impact">Impact</option>
+            <option value="Lucida Console">Lucida Console</option>                
+            </select>
+            
+            <input type="checkbox" name="mark" value="italic">italic
+            <input type="checkbox" name="mark" value="bold">bold
+            
+            글자 크기 : <input type="text" name="textSize" size="5"> <br>
+            텍스트 가로 위치 : <input type="text" name="textX" size="1">
+            텍스트 세로 위치 : <input type="text" name="textY" size="1">
+            텍스트 색상 : <input type="color" name="textColor">
+           <button type="button" onclick="MakeText();">텍스트생성</button>
+            <button type="button" onclick="DeleteText();">텍스트삭제</button>
+            
+        </form>     
+        <br> 
+        <input type="file" id="getfile" accept="image/*" onchange="previewFile();">
+        <br>
+        해시태그(최대 5개) : <input type="text" name="hashTag">
+        <button type="button" onclick="MakeHashTag();">해시태그생성</button>
+        <br>
+        <p id="hashVal"></p>
+        <br>
+        <img id="canvasImg">
+        <button type="button" onclick="Clear();">저장및결제</button>
+-->
+    </body>    
+</html>
+

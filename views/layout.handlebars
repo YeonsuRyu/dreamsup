@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DreamsUp</title>
+	<link rel="stylesheet" href="/css/bootstrap.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/index.css" />
+</head>
+<body>
+	<div class="container">
+    <div class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills pull-right">
+          {{#if user}}
+            <li role="presentation"><a href="/">Dreamsup</a></li>
+          <li role="presentation"><a href="/users/upload">업로드</a></li>
+            <li role="presentation"><a href="/users/logout">로그아웃</a></li>
+      
+     
+          {{else}}
+            <li role="presentation"><a href="/users/login">로그인</a></li>
+            <li role="presentation"><a href="/users/register">등록</a></li>
+          
+          {{/if}}
+        </ul>
+      </nav>
+      <h3 class="text-muted">로그인 화면</h3>
+    </div><!-- /header clearfix -->
+
+    <div class="row">
+      <div class="col-lg-12">
+        {{#if success_msg}}
+          <div class="alert alert-success">{{success_msg}}</div>
+        {{/if}}
+
+        {{#if error_msg}}
+          <div class="alert alert-danger">{{error_msg}}</div>
+        {{/if}}
+
+        {{#if error}}
+          <div class="alert alert-danger">{{error}}</div>
+        {{/if}}
+        
+        {{{body}}}
+      </div><!-- /col-lg-12 -->
+    </div><!-- /row -->
+
+    <footer class="footer">
+      <p>&copy; 2018 Dreamsup, Inc.</p>
+    </footer>
+  </div> <!-- /container -->
+</body>
+</html>
