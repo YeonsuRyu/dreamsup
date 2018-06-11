@@ -1,9 +1,160 @@
 <!DOCTYPE html>
 <html>
-    <head>      
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script>       
-            /* 이미지 미리보기 */
+    <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/style2.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+    </head>
+    
+    <body>
+        
+        
+        <canvas id="cup" width="795" height="381"> </canvas> 
+        
+        <script>
+            const canWidth = 795; // 캔버스 가로 크기
+            const canHeight = 381; // 캔버스 세로 크기
+            var volume = 1; // 구매 수량 
+            
+            var arrCount = 0;
+            var arr = new Array(); // 그림 객체 정보 저장
+            var ImageArr = new Array(); // 이미지 객체 정보 저장
+            
+            var textCount = 0;
+            var TextArr = new Array(); // 텍스트 객체 저장
+            
+            var allImg = 3; // 최종 완성된 이미지 개수
+            var SImg = new Array(); // 최종 완성된 이미지 src 저장
+            var SImgHT = new Array(); // 최종 저장될 이미지의 해시태그 정보 저장
+            SImg[0] = "flower.PNG";
+            SImg[1] = "forever.PNG";
+            SImg[2] = "inthe.PNG";
+            
+            SImgHT[0] = "꽃 빨강 자연"
+            SImgHT[1] = "카페 예쁨 영원"
+            SImgHT[2] = "카페 애플 팬케이크"
+            
+            var canvas = document.getElementById("cup");
+            var context = canvas.getContext("2d");
+            
+             /* 그림의 현재 x,y 좌표 및 가로 세로 사이즈 저장을 위한 객체 선언 */
+            function Info(x_point, y_point, x_size, y_size){
+                this.x_point = x_point;
+                this.y_point = y_point;
+                this.x_size = x_size;
+                this.y_size = y_size;
+            }
+            
+            /* 텍스트의 현재 x, y좌표 저장 하기 위한 객체 선언 */
+            function TextInfo(textval, textchar, x_point, y_point, textcol){
+                this.textval = textval;
+                this.textchar=textchar;
+                this.x_point = x_point;
+                this.y_point = y_point;
+                this.textcol = textcol;
+            }
+            
+            /* 구매 수량 감소 */
+            function Minus(){
+                if( (--volume) == 0)
+                    volume = 1;
+                $("#p3").text(volume);
+            }
+            /* 구매 수량 증가 */
+            function Plus(){
+                volume++;
+                $("#p3").text(volume);
+            }
+            
+            /* 해시태그 추출 함수 */
+            function MakeHashTag(){
+                var value = $('input[name=hashTag]').val(); // 입력한 해시태그 값 가져오기
+                var strArr = value.split('#'); // #을 기준으로 자르기
+                var strHash="";
+                for(var t=1; t<strArr.length && t<4; t++){
+                    strHash += strArr[t]; // 제일 앞의 공백 제거
+                }
+                
+                SImgHT[allImg] = strHash; // 해시태그 정보 넣기
+                var divOut = document.getElementById("hashVal");
+                divOut.innerHTML = SImgHT[allImg];
+            }
+            
+            /* 이미지 추가 접기 펼치기 */
+           $(document).ready(function(){
+           $('.more').click(function(){
+            if($('.more').hasClass('more')){
+             $('.more').addClass('close').removeClass('more');
+             $('.board').css('visibility', 'visible');
+           }else if($('.close').hasClass('close')){
+             $('.close').addClass('more').removeClass('close');  
+             $('.board').css('visibility', 'hidden');
+           }
+           });
+           });
+           
+            /* 텍스트 추가 접기 펼치기 */
+           $(document).ready(function(){
+           $('.more1').click(function(){
+            if($('.more1').hasClass('more1')){
+             $('.more1').addClass('close1').removeClass('more1');
+             $('.board1').css('visibility', 'visible');
+           }else if($('.close1').hasClass('close1')){
+             $('.close1').addClass('more1').removeClass('close1');  
+             $('.board1').css('visibility', 'hidden');
+           }
+           });
+           });
+            
+            /* 텍스트 캔버스에 생성 */
+            function MakeText(){
+                var value = $('input[name=inputText]').val(); // 입력한 텍스트 값 가져오기
+                
+                var fontVal = $('select[name=charType]').val(); // 폰트 종류 값 가져오기
+                
+                var sizeVal = $('input[name=textSize]').val(); //크기 가져오기 
+                
+                var textX = $('input[name=textX]').val(); //x좌표 가져오기 
+                 
+                var textY = $('input[name=textY]').val(); //y좌표 가져오기
+                
+                var textCol = $('input[name=textColor]').val(); // 텍스트 색상 가져오기
+            
+                var mark="";
+                var markArr = document.getElementsByName("mark"); // 글꼴 특성 가져오기                
+                for(var i=0; i<markArr.length;i++){
+                    if(markArr[i].checked){
+                        mark += markArr[i].value;
+                        mark += " ";
+                    }
+                }
+                
+                context.font = mark + sizeVal + "pt " +fontVal;
+                context.fillStyle = textCol;
+                context.fillText(value, textX, textY); // (textX,textY)에 텍스트 생성  
+                TextArr[textCount] = new TextInfo(value, mark + sizeVal + "pt " +fontVal, textX, textY, textCol);  
+                textCount++;
+            }
+            
+            /* 텍스트 삭제 */
+            function DeleteText(){
+                textCount--;
+                context.clearRect(0,0,canWidth,canHeight);
+                
+                    // 이미지 그리기
+                    for(var j=0; j<arrCount; j++){
+                        if(arr[j].x_size != 0 && arr[j].y_size != 0){
+                    context.drawImage(ImageArr[j], arr[j].x_point, arr[j].y_point ,arr[j].x_size, arr[j].y_size);}
+                    }
+                    // 텍스트 그리기
+                    for(var k=0; k<textCount;k++){
+                    context.font = TextArr[k].textchar;
+                    context.fillStyle = TextArr[k].textcol;
+                    context.fillText(TextArr[k].textval,TextArr[k].x_point, TextArr[k].y_point);
+                }
+            }
+            
+            /* 이미지 미리보기 - 이미지 업로딩 */
             function previewFile(){
                
                 var file = document.querySelector('#getfile');
@@ -15,151 +166,402 @@
                     document.querySelector('#preview').src = reader.result;
                 };            
             }
-        </script>      
-        
-        
-        
-        
-        
-    </head>
-    
-    <body>
-        
-        <br>
-        <br>
-        <br>
-        
-       <form  action='/users/uploading' method="post" enctype="multipart/form-data" >
-
-            <font size="5">이름 :</font>&nbsp;&nbsp;<input type="text" name="name" />
-
-        <br>
-
-        <br>
-
-        <input type='file' name='uploading' /><br>
-
-        <br>
-
-        <input type='submit' />
-
-</form>
-
-        
-        <p> customizing </p>    
-      
-          <br>
-              <canvas id="cup" width="480" height="160" style="border :1px solid black"> </canvas> 
-              <br> 
-       
-        <script>
-            var arrCount = 0;
-            var arr = new Array();
-            var ImageArr = new Array();
-           
-            /* 그림의 현재 x,y 좌표 및 가로 세로 사이즈 저장을 위한 객체 선언 */
-            function Info(x_point, y_point, x_size, y_size){
-                this.x_point = x_point;
-                this.y_point = y_point;
-                this.x_size = x_size;
-                this.y_size = y_size;
-            }
-            
-        /* 이미지 캔버스에 그리기 */       
-         var canvas = document.getElementById("cup");
-         var context = canvas.getContext("2d");
-            
-    
+                   
+            /* 이미지 캔버스에 업로드 */
             function ImgUpload(temp){
-               // alert(temp.src);
                 var image = new Image();
                 image.src = temp.src;
                 
                 image.onload = function(){
                context.drawImage(image,0,0,150, 100); // (0,0) 위치에 가로 150, 세로 100크기로 넣기
                };
-            
-            /* 텍스트 캔버스에 생성 */
-            function MakeText(){
-                var value = $('input[name=inputText]').val(); // 입력한 텍스트 값 가져오기
                 
-                context.font = 'italic 38pt Arial';
-                context.fillText(value, 50, 50); // (50,50)에 텍스트 생성
+                arr[arrCount] = new Info(0, 0, 150, 100); // 배열에 이미지 정보 객체 저장
+                ImageArr[arrCount] = image; // 배열에 이미지 저장
+                arrCount++;        
             }
             
-            /* 이미지 이동 */            
-            canvas.addEventListener("click", function(e) {             
-                console.log({x: e.layerX, y: e.layerY}); // 클릭한 현재 좌표
+            /* 이미지 크기 조정 - 더블 클릭 */
+            canvas.addEventListener("dblclick", function(e){
+                console.log({더블클릭x: e.layerX, y: e.layerY}); // 클릭한 현재 좌표
+                var x, y, input;
                 
-                for(var i=0; i<arrCount; i++){
-                   var tmp = arr[i];
-                    
+                // 더블 클릭한 좌표의 그림 선택하기 
+                for(var t=0; t<arrCount; t++){
+                    var tmp = arr[t];
                     if(e.layerX >= tmp.x_point
                       && e.layerX <= tmp.x_point+tmp.x_size
                       && e.layerY >= tmp.y_point
                       && e.layerY <= tmp.y_point+tmp.y_size){                        
-                       var num = i;
-                       }                 
-                } // 캔버스 내 이미지 선택
-                
-                
-                $(document).keydown(function(event){
-                if(event.keyCode == '37'){
-                    //alert('좌측');
-                    context.clearRect(0,0,480,160);
-                    context.save();
-                    context.drawImage(ImageArr[num], tmp.x_point-5, tmp.y_point ,150, 100);
+                       var choice = t;// 캔버스 내 이미지 선택 
+                        break;
+                     }
+                    else
+                        choice = -1;
                 }
                 
-                else if(event.keyCode == '39'){
-                    //alert('우측');
-                     context.clearRect(0,0,480,160);
-                    context.save();
-                    context.drawImage(ImageArr[num], tmp.x_point+5, tmp.y_point ,150, 100);
-                }
-                
-                 else if(event.keyCode == '38'){
-                   // alert('위');
-                      context.clearRect(0,0,480,160);
-                    context.save();
-                    context.drawImage(ImageArr[num], tmp.x_point, tmp.y_point-5 ,150, 100);
-                }
-                
-                 else if(event.keyCode == '40'){
-                   // alert('아래');
-                      context.clearRect(0,0,480,160);
-                    context.save();
-                    context.drawImage(ImageArr[num], tmp.x_point, tmp.y_point +5,150, 100 );
-                }              
-               });
+                if(choice != -1) {
+                     // 현재 위치에서 조정할 수 있는 사이즈의 총 크기 알려주기
+                     var keyX = canWidth - arr[choice].x_point;
+                     var keyY = canHeight - arr[choice].y_point;                    
                     
-            }); 
+                     // 변경하고자 하는 사이즈 입력받기                                  
+                        input = prompt("가로 사이즈를 입력하세요", "현재 크기 : " + arr[choice].x_size + " 최대 변경 가능 크기 : " + keyX);
+                        x = parseInt(input);
+                        input = prompt("세로 사이즈를 입력하세요", "현재 크기 : " + arr[choice].y_size + " 최대 변경 가능 크기 : " + keyY);
+                        y = parseInt(input);
+                    
+                    arr[choice].x_size = x;
+                    arr[choice].y_size = y;
+                    
+                    if(arr[choice].x_size + arr[choice].x_point> canWidth)
+                        arr[choice].x_size = canWidth - arr[choice].x_point;
+                    if(arr[choice].y_size + arr[choice].y_point > canHeight)
+                        arr[choice].y_size = canHeight - arr[choice].y_point;
+                    
+                    context.clearRect(0,0,canWidth,canHeight);
+                    // 이미지 그리기
+                    for(var j=0; j<arrCount; j++){
+                        if(arr[j].x_size != 0 && arr[j].y_size != 0){
+                    context.drawImage(ImageArr[j], arr[j].x_point, arr[j].y_point ,arr[j].x_size, arr[j].y_size);}
+                    }
+                    // 텍스트 그리기
+                    for(var k=0; k<textCount;k++){
+                    context.font = TextArr[k].textchar;
+                    context.fillStyle = TextArr[k].textcol;
+                    context.fillText(TextArr[k].textval,TextArr[k].x_point, TextArr[k].y_point);
+                }
+                }             
+            });
             
-         
+           /* 이미지 이동 및 삭제 */          
+            canvas.addEventListener("click", function(e){
+             console.log({클릭x: e.layerX, y: e.layerY}); // 클릭한 현재 좌표
             
-            /* 이미지 크기 조정 */
+                // 클릭한 좌표의 이미지 선택하기
+                for(var t=0; t<arrCount; t++){
+                    var tmp = arr[t];
+                    if(e.layerX >= tmp.x_point
+                      && e.layerX <= tmp.x_point+tmp.x_size
+                      && e.layerY >= tmp.y_point
+                      && e.layerY <= tmp.y_point+tmp.y_size){                        
+                       var choice = t;// 캔버스 내 이미지 선택 
+                        var tt = arr[choice];
+                        break;
+                     }
+                    else
+                        choice = -1;
+                }
+               // console.log({choice: choice});
+                
+                if(choice != -1){
+                    
+                    $(document).keydown(function(event){
+                        
+                        switch(event.keyCode){
+                            case 37: // 좌로 이동
+                            tt.x_point -= 2;
+                            if(tt.x_point < 0){ // 예외처리
+                                tt.x_point +=2;
+                            }    
+                                break;
+                            case 39: // 우로 이동                                
+                             tt.x_point +=2;   
+                            if(tt.x_point + tt.x_size > canWidth){
+                                tt.x_point -=2;
+                            }
+                                break;
+                            case 38: // 위로 이동                                
+                            tt.y_point -= 2;
+                            if(tt.y_point < 0){
+                                tt.y_point +=2;
+                            }
+                                break;
+                            case 40: // 아래로 이동                               
+                            tt.y_point +=2;
+                           if(tt.y_point + tt.y_size > canHeight){
+                                tt.y_point -=2;
+                            }
+                                break;
+                            case 46: // delete 키 입력-삭제                               
+                            tt.x_point=0; tt.x_size=0; tt.y_point=0; tt.y_size = 0;
+                                break;
+                            default:
+                                break;                         
+                        }
+                        context.clearRect(0,0,canWidth,canHeight);
+                    // 이미지 그리기
+                    for(var j=0; j<arrCount; j++){
+                        if(arr[j].x_size != 0 && arr[j].y_size != 0){
+                    context.drawImage(ImageArr[j], arr[j].x_point, arr[j].y_point ,arr[j].x_size, arr[j].y_size);}
+                    }
+                    // 텍스트 그리기
+                    for(var k=0; k<textCount;k++){
+                    context.font = TextArr[k].textchar;
+                    context.fillStyle = TextArr[k].textcol;
+                    context.fillText(TextArr[k].textval,TextArr[k].x_point, TextArr[k].y_point);
+                }
+                        
+                        
+                    });
+                }
+                
+            });
             
             
+            /* 태그 이용한 컵 디자인 검색 */
+            function Search(){
+                var num = new Array();
+                var strA = $('input[name=inputS]').val(); // 입력한 해시태그 값 가져오기
+                var strArray = strA.split('#'); // #을 기준으로 자르기
+                
+                for(var t=1; t<strArray.length; t++){
+                    
+                    for(var k=0; k<SImgHT.length; k++){
+                        var Value = SImgHT[k];
+                        var testVal = Value.split(' ');
+                        
+                        var subVal = strArray[t]; // 검색 단어
+                        
+                        for(var m=0; m<testVal.length; m++){
+                            if( testVal[m] == subVal){
+                                num.push(k);
+                            }
+                        }
+                        
+                    }
+                }
+                
+                for(var r=0; r<num.length; r++)
+                    console.log({num: num[r]});
+                
+                
+                var unique = [];
+                $.each(num, function(i, el){
+                    if($.inArray(el, unique) == -1)
+                        unique.push(el);
+                }); // 배열 중복 제거
+                
+                 for(var r=0; r<unique.length; r++)
+                    console.log({unique: unique[r]});
+                
+                for(var q=0; q<6; q++){
+                    switch(q){
+                        case 0:
+                            if(q < unique.length)
+                            document.querySelector('#aa').src = SImg[unique[0]];
+                            else
+                                document.querySelector('#aa').src = "";
+                            break;
+                        case 1:
+                            if(q < unique.length)
+                            document.querySelector('#bb').src = SImg[unique[1]];
+                            else
+                                document.querySelector('#bb').src = "";
+                            break;
+                        case 2:
+                            if(q < unique.length)
+                            document.querySelector('#cc').src = SImg[unique[2]];
+                            else
+                                document.querySelector('#cc').src = "";
+                            break;
+                        case 3:
+                            if(q < unique.length)
+                            document.querySelector('#dd').src = SImg[unique[3]];
+                            else
+                                document.querySelector('#dd').src = "";
+                            break;
+                        case 4:
+                            if(q < unique.length)
+                            document.querySelector('#ee').src = SImg[unique[4]];
+                            else
+                                document.querySelector('#ee').src = "";
+                            break;
+                        case 5:
+                            if(q < unique.length)
+                            document.querySelector('#ff').src = SImg[unique[5]];
+                            else
+                                document.querySelector('#ff').src = "";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            
+            /* 저장하기 */
+            function Save(){
+                var look = canvas.toDataURL("/resources/images/");
+                SImg[allImg] = look;
+                allImg++;
+                alert('저장 완료');
+            }
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            /* 구매하기 */
+            function Buy(){
+               var final = canvas.toDataURL("/resources/images/"); // 이미지 src에 해당하는 값
+               // volume 구매 수량에 해당하는 값 넘기기                 
+            }
         </script>
         
         
-        <div id="ImagePre">            
-          <img id ="preview" src= "" width="150" height="50" alt = "사용자 이미지" onclick="ImgUpload(this);">
-          <img src="bom.jpg" id="img1" width="30" height="30" onclick="ImgUpload(this);" >
-         </div>
+        <!-- 이미지 추가 버튼 -->
+        <span class="more"><p id="IA">이미지 추가</p>
+        <span class="blind"> </span>
+        </span>
+        <div class="board">
+         <img id ="preview" src= "/resources/images/" width="30" height="30" alt="이미지" onclick="ImgUpload(this);">
+         <img src="/resources/images/bom.jpg" id="img1" width="30" height="30" onclick="ImgUpload(this);" >
+         <img src="/resources/images/nature.png" id="img1" width="30" height="30" onclick="ImgUpload(this);" >
+         <img src="/resources/images/fire.jpg" id="img1" width="30" height="30" onclick="ImgUpload(this);" >
+         <img src="/resources/images/moon.jpg" id="img1" width="30" height="30" onclick="ImgUpload(this);" >
+         <img src="/resources/images/paris.jpg" id="img1" width="30" height="30" onclick="ImgUpload(this);" >
+          <br> <br> 
+         <input type="file" id="getfile" accept="image/*" onchange="previewFile();">
+        </div>
         
+        <!-- 텍스트 추가 버튼  -->
+        <span class="more1"> <p id="TA">텍스트 추가</p>
+        <span class="blind1"> </span>
+        </span>
+        <div class="board1">
         <form>
            텍스트 입력 : <input type="text" name="inputText"> <br>
-           <button type="button" onclick="MakeText();">텍스트생성</button>
             
+            <select name="charType">
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Arial">Arial</option>
+            <option value="Arial Black">Arial Black</option>
+            <option value="Impact">Impact</option>
+            <option value="Lucida Console">Lucida Console</option>                
+            </select>
+            
+            <input type="checkbox" name="mark" value="italic">italic
+            <input type="checkbox" name="mark" value="bold">bold<br>
+            
+            글자 크기 : <input type="text" name="textSize" size="5"> <br>
+            텍스트 가로 위치 : <input type="text" name="textX" size="1"> <br>
+            텍스트 세로 위치 : <input type="text" name="textY" size="1"><br>
+            텍스트 색상 : <input type="color" name="textColor"><br>
+           <button type="button" onclick="MakeText();">텍스트생성</button>
+            <button type="button" onclick="DeleteText();">텍스트삭제</button>
+            
+        </form>     
+        </div>       
+    
+        <!-- 구매 수량 -->
+        <div id="PC">
+        <p id="p2"> 구매 수량 </p>
+        <button type="button" id="button4" onclick="Minus();">-</button>
+            <div id="innerPC">
+            <p id="p3"> 1 </p>
+             </div>
+        <button type="button" id="button5" onclick="Plus();">+</button>        
+        </div>
+        
+        
+        <!-- 해시 태그 생성 -->
+        <div id="HT">
+         <p id="p1"> 태그지정하기(최대 3개) </p>
+         <input type="text" name="hashTag" id="input1">
+         <button type="button" onclick="MakeHashTag()"; id="button1">생성</button>
+         <p id="hashVal"></p>
+        </div>
+        
+        <!-- 저장하기 구매하기 버튼 -->
+        <button type="button" id="button2" onclick="Save();">저장하기</button>  
+       <!-- <form  action='/upload' method="post" enctype="multipart/form-data" >
+
+        <input type='file' name='upload' /><br>
+
+        <br>
+
+        <input type='submit' />
+
+</form>
+            -->
+        
+        
+        
+        <button type="button" id="button3" onclick="Buy()">구매하기</button>
+        
+        <!-- 최신순 버튼 부분 -->
+        <button type="button" id="recent">최신순</button>
+        
+        <!-- 태그 이용 검색 부분 -->
+        <form>
+        <input type="text" name="inputS" id="IS" name="search">
+        <button type="button" id="butS" onclick="Search();">검색</button>
         </form>
         
+        <!-- 검색한 이미지 부분 -->
+        <div>
+            <img id ="aa" src= "" width="30" height="30"  onclick="ImgUpload(this);">
+            <img id ="bb" src= "" width="30" height="30"  onclick="ImgUpload(this);">
+            <img id ="cc" src= "" width="30" height="30"  onclick="ImgUpload(this);">
+            <img id ="dd" src= "" width="30" height="30"  onclick="ImgUpload(this);">
+            <img id ="ee" src= "" width="30" height="30"  onclick="ImgUpload(this);">
+            <img id ="ff" src= "" width="30" height="30"  onclick="ImgUpload(this);">
+        </div>
         
+        <br><br>
+        <br><br>
         
+        <br><br>
+        <br><br>
         
-     
+        <br><br>
+        <br><br>
         
-        <br> 
-        <input type="file" id="getfile" accept="image/*" onchange="previewFile();">
-    </body>    
+        <br><br>
+        <br><br>
+        
+        <br><br>
+        <br><br>
+        
+        <br><br>
+        <br><br>
+        
+        <br><br>
+        <br><br>
+        
+        <br><br>
+        <br><br>
+        
+        <br><br>
+        <br><br>
+        
+        <br><br>
+        <br><br>
+        
+        <br><br>
+        <br><br>
+        
+        <br><br>
+        <br><br>
+        
+
+        
+
+    </body>
+
 </html>
+
+
+
+
+
+
+

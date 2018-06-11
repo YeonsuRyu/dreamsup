@@ -22,6 +22,7 @@
     "formidable": "^1.2.1",
     "fs": "0.0.1-security",
     "fs-extra": "^6.0.1",
+    "handlebars": "^4.0.11",
     "mongodb": "*",
     "mongojs": "^2.5.0",
     "mongoose": "*",

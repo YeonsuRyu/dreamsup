@@ -1,0 +1,481 @@
+* {
+
+    /*background: rgba(0, 0, 0, .1);*/
+
+    -webkit-box-sizing: border-box;
+
+    -moz-box-sizing: border-box;
+
+    box-sizing: border-box;
+
+    -webkit-transition: background 200ms;
+
+    -moz-transition: background 200ms;
+
+    -ms-transition: background 200ms;
+
+    -o-transition: background 200ms;
+
+    transition: background 200ms;
+
+}
+
+
+
+body {
+
+    background: #ffffff;
+
+    font-size: 14px;
+
+    color: #555;
+
+    line-height: 1.7;
+
+}
+
+
+
+a {
+
+    text-decoration: none;
+
+}
+
+
+
+img {
+
+    max-width: 100%;
+
+    display: block;
+
+}
+
+
+
+.container {
+
+    max-width: 1080px;
+
+    margin: 0 auto;
+
+}
+
+
+
+.fl {
+
+    float: left;
+
+}
+
+
+
+.fr {
+
+    float: right;
+
+}
+
+
+
+.container:before,
+
+.container:after,
+
+.clearf:before,
+
+.clearf:after {
+
+    content: "";
+
+    display: block;
+
+    clear: both;
+
+}
+
+
+
+.col-1,
+
+.col-2,
+
+.col-3,
+
+.col-4,
+
+.col-5,
+
+.col-6,
+
+.col-7,
+
+.col-8,
+
+.col-9,
+
+.col-10 {
+
+    position: relative;
+
+    min-height: 1px;
+
+    float: left;
+
+}
+
+
+
+.col-1 {
+
+    width: 10%;
+
+}
+
+
+
+.col-2 {
+
+    width: 20%;
+
+}
+
+
+
+.col-3 {
+
+    width: 30%;
+
+}
+
+
+
+.col-4 {
+
+    width: 40%;
+
+}
+
+
+
+.col-5 {
+
+    width: 50%;
+
+}
+
+
+
+.col-6 {
+
+    width: 60%;
+
+}
+
+
+
+.col-7 {
+
+    width: 70%;
+
+}
+
+
+
+.col-8 {
+
+    width: 80%;
+
+}
+
+
+
+.top-nav {
+
+    background: #faedfa;
+
+}
+
+
+
+.top-nav .item {
+
+    display: inline-block;
+
+    color: #666;
+
+    padding: 6px 10px;
+
+}
+
+
+.top-nav .item:hover{
+  color:#01021a;
+}
+
+
+
+.header {
+
+    padding: 20px 0;
+
+}
+
+
+
+.header .logo {
+
+    background-image: url(../img/nice.png);
+
+    background-size: contain;
+
+    background-repeat:no-repeat;
+
+    background-position: center center;
+
+    height: 60px;
+
+}
+
+
+
+.header .search-bar {
+
+    border: 2px solid #ffeaf8;
+
+}
+
+
+
+.header input,
+
+.header .search-bar button {
+
+    display: block;
+    float: left;
+
+    padding: 8px 20px;
+
+    border: 0;
+
+    outline: 0;
+
+}
+
+
+
+.header .search-bar button {
+
+    background: #ffeaf8;
+
+    color: #ee3e80;
+
+}
+
+.header .search-bar input:focus{
+  -webkit-box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.header .search-bar button:hover{
+  background: #f7dcee;
+}
+
+.header .cart .trigger {
+
+    padding: 6px 20px;
+
+    background: #fff8fd;
+
+    color: #ee3e80;
+
+    text-align: center;
+
+    margin-left: 10px;
+
+    border: 1px solid #ddd;
+
+    cursor: pointer;
+
+}
+
+
+
+.main-promote .cat {
+
+    background: #ffeaf8;
+
+    color: #ee3e80;
+
+}
+
+
+.main-promote .cat .row {
+
+    padding: 12px 20px;
+
+}
+
+
+
+.main-promote .cat .row:hover {
+
+    background: #b8a08d;
+
+}
+
+.main-promote .zhong{
+  padding: 6px 20px;
+}
+
+
+.main-promote .sub-promote {
+
+    background: #fff;
+
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+
+    padding: 10px;
+
+}
+
+
+
+.main-promote .sub-promote > * {
+
+    padding-bottom: 10px;
+
+}
+
+
+
+.main-promote .sub-promote .avatar {
+
+    display: block;
+
+    width: 50px;
+
+    height: 50px;
+
+    float: left;
+
+    background: #ee3e80;
+
+    -webkit-border-radius: 50%;
+
+    -moz-border-radius: 50%;
+
+    border-radius: 50%;
+
+    margin-right: 10px;
+
+}
+
+
+
+.main-promote .auth {
+
+    margin-top: 10px;
+
+}
+
+
+
+.main-promote .auth button {
+
+    border: 2px solid #f5c7f1;
+
+    background: transparent;
+
+    color: #ee3e80;
+
+    width: 40%;
+
+}
+
+
+
+.promote-title {
+
+    font-size: 19px;
+    padding: 15px 0;
+
+}
+
+
+
+.promote-title:before {
+
+    content: "";
+
+    display: inline-block;
+
+    width: 10px;
+
+    height: 22px;
+
+    margin-right: 10px;
+
+    vertical-align: middle;
+
+    background: #ee3e80;
+
+}
+
+
+
+.card {
+
+    height: 300px;
+
+    margin: 5px;
+
+    background: #e5e7dd;
+
+    -webkit-border-radius: 6px;
+
+    -moz-border-radius: 6px;
+
+    border-radius: 6px;
+
+
+
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+
+}
+
+
+
+.footer {
+
+    text-align: center;
+
+    margin-top: 30px;
+
+    background: #eee;
+
+    padding: 50px 0;
+
+    color: #999;
+
+}
+
+
+
+.footer a {
+
+    color: #999;
+
+    margin-left: 10px;
+
+}

@@ -47,21 +47,15 @@ router.get('/upload', function (req, res) {
 
 //upload
 
-router.get('/test', function (req, res) {
-	res.render('test');
+router.get('/myinfo', function (req, res) {
+	res.render('myinfo');
 //  var user = db.users.findOne({userName:"chun"})
   
 });
 // information
 
-router.get('/information', function (req, res) {
-	res.render('information');
-    
-});
-
-
-router.get('/imyoung', function (req, res) {
-	res.render('imyoung');
+router.get('/customer_service', function (req, res) {
+	res.render('customer_service');
     
 });
 
@@ -208,8 +202,8 @@ router.post('/uploading',function(req,res){
             var file_name = this.openedFiles[i].name;
             var index = file_name.indexOf('/'); 
             var new_file_name = file_name.substring(index + 1);
-            var new_location = 'public/resources/images/'+name+'/';
-            var db_new_location = 'resources/images/'+name+'/';
+            var new_location = '/resources/images/'+name+'/';
+            var db_new_location = '/resources/images/'+name+'/';
 
             //실제 저장하는 경로와 db에 넣어주는 경로로 나눠 주었는데 나중에 편하게 불러오기 위해 따로 나눠 주었음
 

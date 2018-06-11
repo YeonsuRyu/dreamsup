@@ -18,7 +18,10 @@ var UserSchema = mongoose.Schema({
 	},
 	name: {                                  //이름
 		type: String
-	}
+	},
+    money: {
+        type: Number                         // 돈
+    }
 });     
 
 

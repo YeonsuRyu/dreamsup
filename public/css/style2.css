@@ -1,0 +1,472 @@
+body {
+  
+  background-color: #cdd1ff;
+}
+
+#cup {
+    position:absolute;
+    left : 49px;
+    top : 128px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  border: solid 3px #372a9b;
+}
+
+/* 태그 지정 구역 */
+#HT{
+    position:absolute;
+    left : 865px;
+    top : 304px;
+    width: 366px;
+  height: 114px;
+  border-radius: 2px;
+  background-color: #858bec;
+  border: solid 3px #372a9b;
+}
+
+p#p1{  
+  font-family: NanumBarunpen;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.25;
+  /*letter-spacing: 100px; */
+  text-align: left;
+  color: #372a9b;
+}
+
+p#hashVal{
+    position: relative;
+    top : -5px;
+  font-family: NanumBarunpen;
+  font-size: 10px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.25;
+  /*letter-spacing: 100px; */
+  text-align: left;
+  color: #000000;
+}
+/* 태그 입력 공간 */
+input#input1{
+    width: 300px;
+  height: 20px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  border: solid 2px #372a9b;
+}
+
+/* 해시 태그 생성 버튼 */
+#button1{
+  border-radius: 2px;
+  background-color: #fdce65;
+  border: solid 3px #372a9b;
+ font-family: NanumGothic;
+  font-size: 15px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.15;
+  /*letter-spacing: normal;*/
+  text-align: left;
+  color: #372a9b;
+}
+
+/* 저장하기 버튼 */
+#button2{
+    position:absolute;
+    left : 865px;
+    top : 445.3px;    
+    width: 179.6px;
+  height: 63.6px;
+  border-radius: 2px;
+  background-color: #858bec;
+  border: solid 3px #372a9b;
+    
+  font-family: NanumBarunpen;
+  font-size: 23px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.26;
+  /*letter-spacing: 200px;*/
+  text-align: center;
+  color: #ffffff;
+}
+
+/* 구매하기 버튼 */
+#button3{
+    position:absolute;
+    left : 1051.4px;
+    top : 445.3px; 
+    width: 179.6px;
+  height: 63.6px;
+  border-radius: 2px;
+  background-color: #858bec;
+  border: solid 3px #372a9b;
+    
+  font-family: NanumBarunpen;
+  font-size: 23px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.26;
+  /*letter-spacing: 200px;*/
+  text-align: center;
+  color: #ffffff;
+}
+
+/* 구매 수량 구역 */
+#PC{
+    position:absolute;
+    left : 1083px;
+    top : 196px;
+    width: 148px;
+  height: 84px;
+  border-radius: 2px;
+  background-color: #858bec;
+  border: solid 3px #372a9b;
+}
+
+p#p2{
+    position: relative;
+    left:23.5px;
+    top: -13px;
+    
+   font-family: NanumBarunpen;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.25;
+ /* letter-spacing: 100px; */
+  text-align: left;
+  color: #372a9b; 
+}
+
+#button4{
+  position:absolute;
+    left:20px;
+    top:41px;
+    width: 29.9px;
+  height: 29.9px;
+  border-radius: 2px;
+  background-color: #fdce65;
+  border: solid 2px #372a9b;
+    
+    font-family: NanumGothic;
+  font-size: 17px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.18;
+ /* letter-spacing: normal;*/
+  text-align: center;
+  color: #000000;
+}
+
+#button5{
+  position: absolute;
+    left:99.1px;
+    top:41px;
+    width: 29.9px;
+  height: 29.9px;
+  border-radius: 2px;
+  background-color: #fdce65;
+  border: solid 2px #372a9b;
+    
+    font-family: NanumGothic;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.15;
+  letter-spacing: normal;
+  text-align: center;
+  color: #000000;
+}
+
+#innerPC{
+    position: absolute;
+    left: 48.2px;
+    top:41px;
+    width:49.2px;
+    height:25.5px;
+     border-radius: 2px;
+  background-color: #ffffff;
+  border: solid 2px #372a9b;
+}
+
+p#p3{
+    position: relative;
+    top: -19.5px;
+    font-family: NanumGothic;
+  font-size: 21px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.17;
+  /*letter-spacing: normal;*/
+  text-align: center;
+  color: #000000;
+}
+
+/* 이미지 추가 버튼 */
+.more {
+  position:absolute;
+  left:865px;
+  top:128px;
+  display:block;
+  width: 195.3px;
+  height: 68px;
+  border-radius: 2px;
+  background-color: #fdce65;
+  border: solid 3px #372a9b;
+}
+
+p#IA{
+    position:relative;
+    top:-9px;
+    
+    font-family: NanumBarunpen;
+  font-size: 25px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.28;
+  /*letter-spacing: 200px;*/
+  text-align: center;
+  color: #372a9b;
+}
+
+.blind {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+}
+
+.more:hover, .close:hover {
+  cursor:pointer;
+}
+
+.close {
+    position:absolute;
+  left:865px;
+  top:128px;
+  display:block;
+  width: 195.3px;
+  height: 68px;
+  border-radius: 2px;
+  background-color: #fdce65;
+  border: solid 3px #372a9b;
+  background-position: 865px 128px;
+}
+
+.board {
+    z-index: 10;
+  font-family:'돋움';
+  font-size:13px;
+  position:absolute;
+ left:865px;
+  top:196px;
+  width:300px;
+  height:100px;
+  background:#fdce65;
+  visibility:hidden;
+    border-radius: 2px;
+    border: solid 3px #372a9b; /*색깔 바꿀 필요 있음 배경색과 테두리 선 */
+}
+
+/* 텍스트 추가 버튼 */
+.more1 {
+  position:absolute;
+  left:865px;
+  top:212px;
+  display:block;
+  width: 195.3px;
+  height: 68px;
+  border-radius: 2px;
+  background-color: #fdce65;
+  border: solid 3px #372a9b;
+}
+p#TA{
+    position:relative;
+    top:-9px;
+    
+    font-family: NanumBarunpen;
+  font-size: 25px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.28;
+  /*letter-spacing: 200px;*/
+  text-align: center;
+  color: #372a9b;
+}
+
+.blind1 {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+}
+
+.more1:hover, .close:hover {
+  cursor:pointer;
+}
+
+.close1 {
+  position:absolute;
+  left:865px;
+  top:212px;
+  display:block;
+  width: 195.3px;
+  height: 68px;
+  border-radius: 2px;
+  background-color: #fdce65;
+  border: solid 3px #372a9b;
+  background-position: 865px 212px;
+}
+
+.board1 {
+    z-index: 11;
+  font-family:'돋움';
+  font-size:13px;
+  position:absolute;
+ left:865px;
+  top:280px;
+  width:300px;
+  height:180px;
+  background:#fdce65;
+  visibility:hidden;
+    border-radius: 2px;
+    border: solid 3px #372a9b; /*색깔 바꿀 필요 있음 배경색과 테두리 선 */
+}
+
+/* 태그 검색 창 */
+#IS {
+  position:absolute;
+  left:188px;
+  top:531px;
+  width: 656px;
+  height: 39px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  border: solid 2px #372a9b;
+}
+
+#butS{
+  position:absolute;
+  left:850px;
+  top:531px;
+  width: 65px;
+    height: 43.5px;
+  border-radius: 2px;
+  background-color: #fdce65;
+  border: solid 3px #372a9b;
+ font-family: NanumGothic;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.15;
+  /*letter-spacing: normal;*/
+  text-align: left;
+  color: #372a9b;
+}
+
+/* 태그 검색 결과 이미지 버튼 */
+#aa{
+    position:absolute;
+    left:51px;
+    top:586px;
+    width: 196.7px;
+  height: 182.3px;
+  border-radius: 1px;
+  background-color: #ffedc4;
+  border: solid 3px #ffffff;
+}
+
+#bb{
+    position:absolute;
+    left:247.7px;
+    top:586px;
+    width: 196.7px;
+  height: 182.3px;
+  border-radius: 1px;
+  background-color: #fdce65;
+  border: solid 3px #ffffff;
+}
+
+#cc{
+    position:absolute;
+    left:444.3px;
+    top:586px;
+    width: 196.7px;
+  height: 182.3px;
+  border-radius: 1px;
+  background-color: #fdd373;
+  border: solid 3px #ffffff;
+    
+}
+#dd{
+    position:absolute;
+    left:641px;
+    top:586px;
+    width: 196.7px;
+  height: 182.3px;
+  border-radius: 1px;
+  background-color: #ffdb89;
+  border: solid 3px #ffffff;
+    
+}
+#ee{
+    position:absolute;
+    left:837.7px;
+    top:586px;
+    width: 196.7px;
+  height: 182.3px;
+  border-radius: 1px;
+  background-color: #ffe19d;
+  border: solid 3px #ffffff;
+    
+}
+#ff{
+    position:absolute;
+    left:1034.3px;
+    top:586px;
+    width: 196.7px;
+  height: 182.3px;
+  border-radius: 1px;
+  background-color: #ffedc4;
+  border: solid 3px #ffffff;
+    
+}
+
+/* 최신순 버튼 */
+#recent{
+    position: absolute;
+    left:49px;
+    top:531px;
+    width: 127px;
+  height: 39px;
+  border-radius: 20px;
+  background-color: #858bec;
+  border: solid 2px #372a9b;
+    font-family: NanumGothic;
+  font-size: 20px;
+  font-weight: 800;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.15;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}

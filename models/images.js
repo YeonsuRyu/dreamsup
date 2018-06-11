@@ -12,8 +12,11 @@ var imgSchema = mongoose.Schema({
 	time: {                                  //이메일
 		type: Date,
         default : Date.now
-	}
-	
+	},
+	hour:{
+        type: Number,
+    
+}
 });      
 
 
