@@ -44,7 +44,11 @@ router.get('/upload', function (req, res) {
 //  var user = db.users.findOne({userName:"chun"})
   
 });
-
+router.get('/uploading', function (req, res) {
+	res.render('uploading');
+//  var user = db.users.findOne({userName:"chun"})
+  
+});
 //upload
 
 router.get('/myinfo', function (req, res) {
